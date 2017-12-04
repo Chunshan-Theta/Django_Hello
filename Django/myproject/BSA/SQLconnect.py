@@ -12,12 +12,13 @@ import MySQLdb
 # 連接 MySQL 資料庫
 #db = MySQLdb.connect(host="xxx.xxxx.xxxx.xxxx",user="root", passwd="root_password", db="db_liat_name",charset='utf8')
 
-
+'''
 print "-- DB commend: test connent to DB "
 db = MySQLdb.connect(host="localhost",user="root", passwd="root", db="BSA",charset='utf8')
 cursor = db.cursor()
 print "-- DB commend: close test connection to DB"
 db.close()
+'''
 
 def status():
     if db.open:
