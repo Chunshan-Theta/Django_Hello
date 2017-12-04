@@ -1,0 +1,71 @@
+<!-- hello_world.html -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <script type="text/javascript" src="{% static 'js/jq.js' %}"></script>
+        <title>行為序列分析</title>
+        <style>
+            body {
+               background-color: lightyellow;
+            }
+            em {
+                color: LightSeaGreen;
+            }
+        </style>
+        <script>
+        $(document).ready(function(){
+	        $("#enter").click(function(){
+                document.getElementById("enter").disabled = true;
+                $.post("http://hellotheta.tk:8000/BSA_API_Json/",
+                {
+                    num:$("#NumOfBS").val(),
+                    group:$("#Group").val(),
+                    ApiType:$("input[name=api]:checked").val(),
+                    source:"input-csv",
+                    con:$("#content").val(),
+
+                },
+                function(data,status){
+                    $("#array_BSA").html(data);
+                    alert(status);
+                    document.getElementById("enter").disabled = false;
+                });
+                
+            });
+	    });</script>
+    </head>
+    <body>
+        <!--
+        {% load staticfiles %}
+        <img src="{% static 'images/1.jpg' %}"" alt="img">
+        -->
+        <h1>行為序列分析</h1>
+        <em>{{ current_time }}</em><br>
+        <a href="../BSA_SQLData">看資料</a> | 
+        <a href="../BSA_BList">看行為佇列</a> | 
+        <a href="../BSA_BArray">看行為序列矩陣</a> |
+        <a href="../BSA_Sample" download="sample.csv">Download Sample</a>
+        <br>
+        <textarea rows="10" cols="100" id="content" name="content">{{ csv_data }}</textarea><br>
+        行為種類數量為：<input type="text" id="NumOfBS" name="NumOfBS" value="{{ NumOfBS }}"></input>
+        指定組別(-1為不指定)：<input type="text" id="Group" name="Group" value="{{ Group }}"></input>
+        ＡＰＩ選擇：<!--<input type="text" id="API_Select" name="API_Select" value="BArray"></input>-->
+        <input type="radio" name='api' value="BArray"> BArray
+        <input type="radio" name='api' value="ZScore"> ZScore
+
+        <input id='enter' type="button" value="計算行為序列"></input>
+        <form action="./draw/" method="post">{% csrf_token %}            
+            <textarea id="array_BSA" name='JsonString' rows="10" cols="100" >{{ array_BSA }}</textarea><br>
+            <input type="text" name="t1" value="1號行為"></input>
+            <input type="text" name="t2" value="2號行為"></input>
+            <input type="text" name="t3" value="3號行為"></input>
+            <input type="text" name="t4" value="4號行為"></input>
+            <input type="text" name="t5" value="5號行為"></input>
+            <input type="text" name="t6" value="6號行為"></input>
+            <br><input type="text" name="bigtitle" value="大標題"></input>
+            <br><input type="submit" value="ZScore轉圖">
+        </form> 
+    </body>
+</html>
