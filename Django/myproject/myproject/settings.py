@@ -18,6 +18,9 @@ DATA_DIR = os.environ.get('OPENSHIFT_DATA_DIR', BASE_DIR)
 
 import sys
 sys.path.append(os.path.join(REPO_DIR, 'libs'))
+reload(sys)                         # 2
+sys.setdefaultencoding('utf-8')     # 3
+
 import secrets
 SECRETS = secrets.getter(os.path.join(DATA_DIR, 'secrets.json'))
 
@@ -34,11 +37,14 @@ SECRET_KEY = SECRETS['secret_key']
 DEBUG = 1
 from socket import gethostname
 ALLOWED_HOSTS = [
-    '127.0.0.1',            
+    '127.0.0.1',
+    '*',# DON'T USE '*',if you site is for public.            
 ]
 
 
 # Application definition
+# please install rest_framework lib of Django first.
+# install command: pip install djangorestframework
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -48,8 +54,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'APP1',
-    'BSA',
+    'DemoProject',
 )
 
 MIDDLEWARE_CLASSES = (
