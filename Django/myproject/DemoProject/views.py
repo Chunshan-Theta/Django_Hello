@@ -29,7 +29,7 @@ def Http_From_Get(request,input1,input2):
     responds = {'stringData': str(input1)+str(input2),}
     return render(request,template,responds )
 
-
+@csrf_exempt #csrf skip, if you want anywhere source post
 def Http_From_Post(request):
     try:
         data = str(request.POST['input1'])
