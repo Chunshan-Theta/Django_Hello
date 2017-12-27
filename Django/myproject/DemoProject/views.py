@@ -42,4 +42,15 @@ def Http_From_Post(request):
     return render(request,template,responds )
 
 
+@csrf_exempt #csrf skip, if you want to get the http's post form anywhere
+def api_template(request):
+    try:
+        data = str(request.POST['input1'])
+    except KeyError as e:
+        data = 'did not have post'
+
+
+    resp = HttpResponse(data)
+    resp['Access-Control-Allow-Origin'] = '*'
+    return resp 
 
