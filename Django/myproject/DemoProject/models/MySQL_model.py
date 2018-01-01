@@ -44,7 +44,7 @@ def exeSQl(sql):
     print '-- SQL commend: '+str(sql)
     # 執行 MySQL 查詢指令
     cursor.execute(sql)
-
+    db.commit()
     # 取回所有查詢結果
     results = cursor.fetchall()
     '''
